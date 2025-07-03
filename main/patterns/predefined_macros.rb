@@ -292,7 +292,7 @@ def predefinedMacros()
         Pattern.new(
             match: Pattern.new(/\b/).then(
                 match: /#{macros.join "|"}/,
-                tag_as: "entity.name.other.preprocessor.macro.predefined.$match"
+                tag_as: "entity.name.function.preprocessor.macro.predefined.$match"
             ).then(/\b/)
         ),
         Pattern.new(
@@ -300,7 +300,7 @@ def predefinedMacros()
                 match: /[A-Z_]+/,
                 reference: "name",
             ).then(/__\b/),
-            tag_as: "entity.name.other.preprocessor.macro.predefined.probably.$reference(name)",
+            tag_as: "entity.name.function.preprocessor.macro.predefined.probably.$reference(name)",
         )
     ]
     return macros

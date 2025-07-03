@@ -25,6 +25,8 @@ entity.name.function.definition.special.member.destructor.hlsl
 entity.name.function.destructor.hlsl
 entity.name.function.member.hlsl
 entity.name.function.preprocessor.hlsl
+entity.name.function.preprocessor.macro.predefined.$1.hlsl
+entity.name.function.preprocessor.macro.predefined.probably.$1.hlsl
 entity.name.label.call.hlsl
 entity.name.label.hlsl
 entity.name.namespace.alias.hlsl
@@ -36,10 +38,8 @@ entity.name.operator.type.hlsl
 entity.name.operator.type.pointer.hlsl
 entity.name.operator.type.reference.hlsl
 entity.name.other.preprocessor.macro.include.hlsl
-entity.name.other.preprocessor.macro.predefined.$1.hlsl
 entity.name.other.preprocessor.macro.predefined.DLLEXPORT.hlsl
 entity.name.other.preprocessor.macro.predefined.probably.$0.hlsl
-entity.name.other.preprocessor.macro.predefined.probably.$1.hlsl
 entity.name.scope-resolution.constructor.hlsl
 entity.name.scope-resolution.destructor.hlsl
 entity.name.scope-resolution.function.call.hlsl
