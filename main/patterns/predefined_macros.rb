@@ -266,7 +266,28 @@ def predefinedMacros()
         "_Float16",
     ]
 
-    macros = cpp + msvc + gcc + clang
+    hlsl = [
+        "__hlsl_dx_compiler",
+        "__DXC_VERSION_MAJOR",
+        "__DXC_VERSION_MINOR",
+        "__DXC_VERSION_RELEASE",
+        "__DXC_VERSION_COMMITS",
+        "__HLSL_VERSION",
+        "__SHADER_TARGET_MAJOR",
+        "__SHADER_TARGET_MINOR",
+        "__SHADER_TARGET_STAGE",
+        "__SHADER_STAGE_VERTEX",
+        "__SHADER_STAGE_PIXEL",
+        "__SHADER_STAGE_GEOMETRY",
+        "__SHADER_STAGE_HULL",
+        "__SHADER_STAGE_DOMAIN",
+        "__SHADER_STAGE_COMPUTE",
+        "__SHADER_STAGE_AMPLIFICATION",
+        "__SHADER_STAGE_MESH",
+        "__SHADER_STAGE_LIBRARY",
+    ]
+
+    macros = cpp + msvc + gcc + clang + hlsl
     macros = [
         Pattern.new(
             match: Pattern.new(/\b/).then(
