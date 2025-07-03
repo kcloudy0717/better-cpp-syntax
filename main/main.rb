@@ -615,6 +615,7 @@ grammar = Grammar.new(
                         :attributes_context,
                         :string_context,
                         :ever_present_context,
+                        :evaluation_context,
                     ],
                 ),
                 Pattern.new(match: /using/, tag_as: "keyword.other.using.directive").then(@spaces).then(
