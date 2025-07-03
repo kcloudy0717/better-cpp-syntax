@@ -66,7 +66,6 @@ entity.name.type.enum.hlsl
 entity.name.type.enum.parameter.hlsl
 entity.name.type.hlsl
 entity.name.type.parameter.hlsl
-entity.name.type.pointer.function.hlsl
 entity.name.type.struct.hlsl
 entity.name.type.struct.parameter.hlsl
 entity.name.type.template.hlsl
@@ -280,7 +279,6 @@ punctuation.definition.end.bracket.square
 punctuation.definition.end.bracket.square.array.type.hlsl
 punctuation.definition.end.bracket.square.binding.hlsl
 punctuation.definition.end.bracket.square.hlsl
-punctuation.definition.function.pointer.dereference.hlsl
 punctuation.definition.function.return-type.hlsl
 punctuation.definition.parameters.begin.preprocessor.hlsl
 punctuation.definition.parameters.end.preprocessor.hlsl
@@ -348,22 +346,18 @@ punctuation.section.block.end.bracket.curly.namespace.hlsl
 punctuation.section.block.end.bracket.curly.struct.hlsl
 punctuation.section.block.end.bracket.curly.switch.hlsl
 punctuation.section.block.end.bracket.curly.union.hlsl
-punctuation.section.parameters.begin.bracket.round.function.pointer.hlsl
 punctuation.section.parameters.begin.bracket.round.hlsl
 punctuation.section.parameters.begin.bracket.round.special.constructor.hlsl
 punctuation.section.parameters.begin.bracket.round.special.member.destructor.hlsl
 punctuation.section.parameters.begin.bracket.round.special.operator-overload.hlsl
-punctuation.section.parameters.end.bracket.round.function.pointer.hlsl
 punctuation.section.parameters.end.bracket.round.hlsl
 punctuation.section.parameters.end.bracket.round.special.constructor.hlsl
 punctuation.section.parameters.end.bracket.round.special.member.destructor.hlsl
 punctuation.section.parameters.end.bracket.round.special.operator-overload.hlsl
 punctuation.section.parens.begin.bracket.round.conditional.switch.hlsl
-punctuation.section.parens.begin.bracket.round.function.pointer.hlsl
 punctuation.section.parens.begin.bracket.round.hlsl
 punctuation.section.parens.control.defined.hlsl
 punctuation.section.parens.end.bracket.round.conditional.switch.hlsl
-punctuation.section.parens.end.bracket.round.function.pointer.hlsl
 punctuation.section.parens.end.bracket.round.hlsl
 punctuation.separator.attribute.hlsl
 punctuation.separator.colon.access.control.hlsl
@@ -411,7 +405,6 @@ storage.modifier.pointer.hlsl
 storage.modifier.reference.hlsl
 storage.modifier.specifier.$3.hlsl
 storage.modifier.specifier.extern.hlsl
-storage.modifier.specifier.functional.post-parameters.$10.hlsl
 storage.modifier.specifier.functional.post-parameters.$5.hlsl
 storage.modifier.specifier.functional.pre-parameters.$0.hlsl
 storage.modifier.specifier.parameter.hlsl
@@ -467,7 +460,6 @@ variable.language.this.hlsl
 variable.lower-case.hlsl
 variable.other.assignment.hlsl
 variable.other.declare.hlsl
-variable.other.definition.pointer.function.hlsl
 variable.other.enummember.hlsl
 variable.other.for.hlsl
 variable.other.macro.argument.hlsl
@@ -496,7 +488,6 @@ variable.other.unknown.$5.hlsl
 variable.other.unknown.$8.hlsl
 variable.parameter.hlsl
 variable.parameter.initializer.hlsl
-variable.parameter.pointer.function.hlsl
 variable.parameter.preprocessor.hlsl
 variable.snake-case.hlsl
 variable.upper-case.hlsl

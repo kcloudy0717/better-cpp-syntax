@@ -205,7 +205,7 @@ grammar = Grammar.new(
             :block,                         # TODO: after all function definition patterns are fixed, remove this from here and put it in the function definition context
             # statements
             :static_assert,                 # it is unclear to me if static_assert can appear in the root context or not, so I'm leaving it here to be safe. https://en.cppreference.com/w/cpp/language/static_assert
-            # :assembly,                      # it is unclear to me is assembly can be in the root context or not, so I'm leaving it here to be safe # HLSL change
+            :assembly,                      # it is unclear to me is assembly can be in the root context or not, so I'm leaving it here to be safe
             :function_pointer,
 
             # eventually this needs to be removed
@@ -266,7 +266,7 @@ grammar = Grammar.new(
             :functional_specifiers_pre_parameters,      # TODO: these probably need to be moved inside the function definition pattern
             :storage_types,
             # misc
-            # :lambdas, # HLSL change
+            :lambdas,
             :attributes_context, # this is here because it needs to be lower than :operators. TODO: once all the contexts are cleaned up, this should be put in a better spot
             :parentheses,
             :function_call,
@@ -1813,51 +1813,53 @@ grammar = Grammar.new(
 #
 # function pointer
 #
-    after_declaration = std_space.maybe(grammar[:qualifiers_and_specifiers_post_parameters_inline].then(std_space)).lookAheadFor(/[{=,);>]|\n/).lookAheadToAvoid(/\(/)
-    functionPointerGenerator = ->(identifier_tag) do
-        return PatternRange.new(
-            start_pattern: grammar[:simple_type].then(std_space).then(
-                    match: /\(/,
-                    tag_as: "punctuation.section.parens.begin.bracket.round.function.pointer"
-                ).then(
-                    match: /\*/,
-                    tag_as: "punctuation.definition.function.pointer.dereference",
-                ).maybe(@spaces).maybe(
-                    match: identifier,
-                    tag_as: identifier_tag
-                ).maybe(@spaces).zeroOrMoreOf(
-                    # an array of function pointers ?
-                    array_brackets
-                ).then(
-                    # closing ) for the variable name
-                    match: /\)/,
-                    tag_as: "punctuation.section.parens.end.bracket.round.function.pointer"
-                ).maybe(@spaces).then(
-                    # opening ( for the parameter types
-                    match: /\(/,
-                    tag_as: "punctuation.section.parameters.begin.bracket.round.function.pointer"
-                ),
-            end_pattern: Pattern.new(
-                    match: /\)/,
-                    tag_as: "punctuation.section.parameters.end.bracket.round.function.pointer"
-                ).then(after_declaration),
-            includes: [
-                :function_parameter_context,
-            ]
-        )
-    end
-    grammar[:function_pointer] = functionPointerGenerator["variable.other.definition.pointer.function"]
-    grammar[:function_pointer_parameter] = functionPointerGenerator["variable.parameter.pointer.function"]
-    grammar[:typedef_function_pointer] = PatternRange.new(
-        start_pattern: Pattern.new(
-            match: variableBounds[/typedef/],
-            tag_as: "keyword.other.typedef"
-        ).maybe(@spaces).lookAheadFor(Pattern.new(/.*\(\*\s*/).then(identifier).then(/\s*\)/)),
-        end_pattern: lookBehindFor(/;/),
-        includes: [
-            functionPointerGenerator["entity.name.type.alias entity.name.type.pointer.function"]
-        ]
-    )
+    # HLSL change begin
+    # after_declaration = std_space.maybe(grammar[:qualifiers_and_specifiers_post_parameters_inline].then(std_space)).lookAheadFor(/[{=,);>]|\n/).lookAheadToAvoid(/\(/)
+    # functionPointerGenerator = ->(identifier_tag) do
+    #     return PatternRange.new(
+    #         start_pattern: grammar[:simple_type].then(std_space).then(
+    #                 match: /\(/,
+    #                 tag_as: "punctuation.section.parens.begin.bracket.round.function.pointer"
+    #             ).then(
+    #                 match: /\*/,
+    #                 tag_as: "punctuation.definition.function.pointer.dereference",
+    #             ).maybe(@spaces).maybe(
+    #                 match: identifier,
+    #                 tag_as: identifier_tag
+    #             ).maybe(@spaces).zeroOrMoreOf(
+    #                 # an array of function pointers ?
+    #                 array_brackets
+    #             ).then(
+    #                 # closing ) for the variable name
+    #                 match: /\)/,
+    #                 tag_as: "punctuation.section.parens.end.bracket.round.function.pointer"
+    #             ).maybe(@spaces).then(
+    #                 # opening ( for the parameter types
+    #                 match: /\(/,
+    #                 tag_as: "punctuation.section.parameters.begin.bracket.round.function.pointer"
+    #             ),
+    #         end_pattern: Pattern.new(
+    #                 match: /\)/,
+    #                 tag_as: "punctuation.section.parameters.end.bracket.round.function.pointer"
+    #             ).then(after_declaration),
+    #         includes: [
+    #             :function_parameter_context,
+    #         ]
+    #     )
+    # end
+    # grammar[:function_pointer] = functionPointerGenerator["variable.other.definition.pointer.function"]
+    # grammar[:function_pointer_parameter] = functionPointerGenerator["variable.parameter.pointer.function"]
+    # grammar[:typedef_function_pointer] = PatternRange.new(
+    #     start_pattern: Pattern.new(
+    #         match: variableBounds[/typedef/],
+    #         tag_as: "keyword.other.typedef"
+    #     ).maybe(@spaces).lookAheadFor(Pattern.new(/.*\(\*\s*/).then(identifier).then(/\s*\)/)),
+    #     end_pattern: lookBehindFor(/;/),
+    #     includes: [
+    #         functionPointerGenerator["entity.name.type.alias entity.name.type.pointer.function"]
+    #     ]
+    # )
+    # HLSL change end
 #
 # Parameters
 #
