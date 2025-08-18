@@ -189,6 +189,8 @@ tokens = [
     { representation: "uintmax_t"            , name: "uintmax_t"            , isType: true },
     { representation: "uintmax_t"            , name: "uintmax_t"            , isType: true },
     # other hlsl types
+    { representation: "vector"               , name: "vector"               , isType: true },
+    { representation: "matrix"               , name: "matrix"               , isType: true },
     { representation: "half"                 , name: "half"                 , isType: true },
     { representation: "bool1"                , name: "bool1"                , isType: true },
     { representation: "bool2"                , name: "bool2"                , isType: true },
