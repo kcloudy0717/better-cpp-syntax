@@ -205,8 +205,8 @@ grammar = Grammar.new(
             :block,                         # TODO: after all function definition patterns are fixed, remove this from here and put it in the function definition context
             # statements
             :static_assert,                 # it is unclear to me if static_assert can appear in the root context or not, so I'm leaving it here to be safe. https://en.cppreference.com/w/cpp/language/static_assert
-            :assembly,                      # it is unclear to me is assembly can be in the root context or not, so I'm leaving it here to be safe
-            :function_pointer,
+            # :assembly,                      # it is unclear to me is assembly can be in the root context or not, so I'm leaving it here to be safe
+            # :function_pointer,
 
             # eventually this needs to be removed
             :evaluation_context
@@ -266,7 +266,7 @@ grammar = Grammar.new(
             :functional_specifiers_pre_parameters,      # TODO: these probably need to be moved inside the function definition pattern
             :storage_types,
             # misc
-            :lambdas,
+            # :lambdas,
             :attributes_context, # this is here because it needs to be lower than :operators. TODO: once all the contexts are cleaned up, this should be put in a better spot
             :parentheses,
             :function_call,
@@ -330,14 +330,14 @@ grammar = Grammar.new(
     variable_name_without_bounds = identifier
     # word bounds are inefficient, but they are accurate
     variable_name = variableBounds[variable_name_without_bounds]
-    
+
     # now import doxygen
     require_relative PathFor[:pattern]["doxygen"]
     grammar[:comments] = [
         *doxygen(variable_name),
         *grammar[:comments]
     ]
-    
+
 #
 # Constants
 #
@@ -1108,7 +1108,7 @@ grammar = Grammar.new(
             assignment_operators
         )
     )
-    
+
     grammar[:unknown_variable] = generateVariableVariations["variable.other.unknown.$match"]
     normal_type_pattern = maybe(declaration_storage_specifiers.then(std_space)).then(qualified_type.maybe(ref_deref[]))
     # normal variable assignment
@@ -1871,7 +1871,7 @@ grammar = Grammar.new(
         end_pattern: parameter_ending,
         includes: [
             :ever_present_context, #macros and comments
-            :function_pointer_parameter,
+            # :function_pointer_parameter,
             # all of these (indented) are here because of #282
                 :memory_operators,
                 :builtin_storage_type_initilizer,
@@ -1977,7 +1977,7 @@ grammar = Grammar.new(
         includes: [
             :ever_present_context, #macros and comments
             :string_context,
-            :function_pointer_parameter,
+            # :function_pointer_parameter,
             :decltype,
             :vararg_ellipses,
             # this next pattern is for finding preceding modifiers like "const" or "short const" and then forcing the word after them to be tagged as a type "const aType" "short const int"
@@ -2486,7 +2486,7 @@ grammar = Grammar.new(
                 :inheritance_context,
                 :template_call_range_helper,
             ],
-            body_includes: [ :function_pointer, :static_assert, :constructor_inline, :destructor_inline, :operator_overload, :normal_variable_declaration, :normal_variable_assignment, :$initial_context ],
+            body_includes: [ :static_assert, :constructor_inline, :destructor_inline, :operator_overload, :normal_variable_declaration, :normal_variable_assignment, :$initial_context ],
             tail_includes: tail_includes
         )
     end

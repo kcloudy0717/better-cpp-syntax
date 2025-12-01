@@ -94,12 +94,6 @@
       "include": "#static_assert"
     },
     {
-      "include": "#assembly"
-    },
-    {
-      "include": "#function_pointer"
-    },
-    {
       "include": "#evaluation_context"
     }
   ],
@@ -642,9 +636,6 @@
           },
           "name": "meta.body.class.hlsl",
           "patterns": [
-            {
-              "include": "#function_pointer"
-            },
             {
               "include": "#static_assert"
             },
@@ -3582,9 +3573,6 @@
           "include": "#storage_types"
         },
         {
-          "include": "#lambdas"
-        },
-        {
           "include": "#attributes_context"
         },
         {
@@ -3828,12 +3816,6 @@
         },
         {
           "include": "#static_assert"
-        },
-        {
-          "include": "#assembly"
-        },
-        {
-          "include": "#function_pointer"
         },
         {
           "include": "#over_qualified_types"
@@ -8893,9 +8875,6 @@
           "include": "#string_context"
         },
         {
-          "include": "#function_pointer_parameter"
-        },
-        {
           "include": "#decltype"
         },
         {
@@ -9681,9 +9660,6 @@
       "patterns": [
         {
           "include": "#ever_present_context"
-        },
-        {
-          "include": "#function_pointer_parameter"
         },
         {
           "include": "#memory_operators"
@@ -14786,9 +14762,6 @@
           "name": "meta.body.struct.hlsl",
           "patterns": [
             {
-              "include": "#function_pointer"
-            },
-            {
               "include": "#static_assert"
             },
             {
@@ -16085,9 +16058,6 @@
           "include": "#storage_types"
         },
         {
-          "include": "#lambdas"
-        },
-        {
           "include": "#attributes_context"
         },
         {
@@ -16735,9 +16705,6 @@
               "name": "meta.body.class.hlsl",
               "patterns": [
                 {
-                  "include": "#function_pointer"
-                },
-                {
                   "include": "#static_assert"
                 },
                 {
@@ -17092,9 +17059,6 @@
               "name": "meta.body.struct.hlsl",
               "patterns": [
                 {
-                  "include": "#function_pointer"
-                },
-                {
                   "include": "#static_assert"
                 },
                 {
@@ -17448,9 +17412,6 @@
               },
               "name": "meta.body.union.hlsl",
               "patterns": [
-                {
-                  "include": "#function_pointer"
-                },
                 {
                   "include": "#static_assert"
                 },
@@ -18105,9 +18066,6 @@
           },
           "name": "meta.body.union.hlsl",
           "patterns": [
-            {
-              "include": "#function_pointer"
-            },
             {
               "include": "#static_assert"
             },
