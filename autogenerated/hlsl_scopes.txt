@@ -207,10 +207,8 @@ meta.declaration.type.alias.value.unknown.hlsl
 meta.encoding
 meta.encoding.hlsl
 meta.enum.definition.hlsl
-meta.function.definition.body.lambda.hlsl
 meta.function.definition.hlsl
 meta.function.definition.parameters
-meta.function.definition.parameters.lambda.hlsl
 meta.function.definition.parameters.special.constructor
 meta.function.definition.parameters.special.member.destructor
 meta.function.definition.parameters.special.operator-overload
@@ -231,7 +229,6 @@ meta.head.switch.hlsl
 meta.head.union.hlsl
 meta.initialization.hlsl
 meta.initialization.parameter.hlsl
-meta.lambda.capture.hlsl
 meta.parameter.hlsl
 meta.parameter.initialization
 meta.parens.control.for.hlsl
@@ -272,8 +269,6 @@ punctuation.definition.begin.bracket.square
 punctuation.definition.begin.bracket.square.array.type.hlsl
 punctuation.definition.begin.bracket.square.binding.hlsl
 punctuation.definition.begin.bracket.square.hlsl
-punctuation.definition.capture.begin.lambda.hlsl
-punctuation.definition.capture.end.lambda.hlsl
 punctuation.definition.comment.begin.documentation.hlsl
 punctuation.definition.comment.begin.hlsl
 punctuation.definition.comment.documentation.hlsl
@@ -287,10 +282,7 @@ punctuation.definition.end.bracket.square.binding.hlsl
 punctuation.definition.end.bracket.square.hlsl
 punctuation.definition.function.pointer.dereference.hlsl
 punctuation.definition.function.return-type.hlsl
-punctuation.definition.lambda.return-type.hlsl
-punctuation.definition.parameters.begin.lambda.hlsl
 punctuation.definition.parameters.begin.preprocessor.hlsl
-punctuation.definition.parameters.end.lambda.hlsl
 punctuation.definition.parameters.end.preprocessor.hlsl
 punctuation.definition.string.$2.begin
 punctuation.definition.string.$2.end
@@ -340,7 +332,6 @@ punctuation.section.block.begin.bracket.curly.function.definition.special.constr
 punctuation.section.block.begin.bracket.curly.function.definition.special.member.destructor.hlsl
 punctuation.section.block.begin.bracket.curly.function.definition.special.operator-overload.hlsl
 punctuation.section.block.begin.bracket.curly.hlsl
-punctuation.section.block.begin.bracket.curly.lambda.hlsl
 punctuation.section.block.begin.bracket.curly.namespace.hlsl
 punctuation.section.block.begin.bracket.curly.struct.hlsl
 punctuation.section.block.begin.bracket.curly.switch.hlsl
@@ -353,7 +344,6 @@ punctuation.section.block.end.bracket.curly.function.definition.special.construc
 punctuation.section.block.end.bracket.curly.function.definition.special.member.destructor.hlsl
 punctuation.section.block.end.bracket.curly.function.definition.special.operator-overload.hlsl
 punctuation.section.block.end.bracket.curly.hlsl
-punctuation.section.block.end.bracket.curly.lambda.hlsl
 punctuation.section.block.end.bracket.curly.namespace.hlsl
 punctuation.section.block.end.bracket.curly.struct.hlsl
 punctuation.section.block.end.bracket.curly.switch.hlsl
@@ -417,7 +407,6 @@ storage.modifier.array.bracket.square
 storage.modifier.const.hlsl
 storage.modifier.hlsl
 storage.modifier.inline.hlsl
-storage.modifier.lambda.$0.hlsl
 storage.modifier.pointer.hlsl
 storage.modifier.reference.hlsl
 storage.modifier.specifier.$3.hlsl
@@ -449,7 +438,6 @@ storage.type.namespace.alias.hlsl
 storage.type.namespace.definition.hlsl
 storage.type.namespace.directive.hlsl
 storage.type.primitive.hlsl
-storage.type.return-type.lambda.hlsl
 storage.type.struct.declare.hlsl
 storage.type.struct.parameter.hlsl
 storage.type.template.argument.$0.hlsl
@@ -506,7 +494,6 @@ variable.other.unknown.$4.hlsl
 variable.other.unknown.$49.hlsl
 variable.other.unknown.$5.hlsl
 variable.other.unknown.$8.hlsl
-variable.parameter.capture.hlsl
 variable.parameter.hlsl
 variable.parameter.initializer.hlsl
 variable.parameter.pointer.function.hlsl

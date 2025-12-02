@@ -3579,9 +3579,6 @@
           "include": "#storage_types"
         },
         {
-          "include": "#lambdas"
-        },
-        {
           "include": "#attributes_context"
         },
         {
@@ -5865,145 +5862,6 @@
           "name": "punctuation.separator.label.hlsl"
         }
       }
-    },
-    "lambdas": {
-      "begin": "(?:(?<=[^\\s]|^)(?<![\\w\\]\\)\\[\\*&\">])|(?<=\\Wreturn|^return))(?:\\s+)?(\\[(?!\\[| *+\"| *+\\d))((?:[^\\[\\]]|((?<!\\[)\\[(?!\\[)(?:[^\\[\\]]*+\\g<3>?)++\\]))*+)(\\](?!((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))[\\[\\];=]))",
-      "end": "(?<=[;}])",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.capture.begin.lambda.hlsl"
-        },
-        "2": {
-          "name": "meta.lambda.capture.hlsl",
-          "patterns": [
-            {
-              "include": "#the_this_keyword"
-            },
-            {
-              "match": "((?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(?:(?:(?=\\]|\\z|$)|(,))|(\\=))",
-              "captures": {
-                "1": {
-                  "name": "variable.parameter.capture.hlsl"
-                },
-                "2": {
-                  "patterns": [
-                    {
-                      "include": "#inline_comment"
-                    }
-                  ]
-                },
-                "3": {
-                  "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
-                },
-                "4": {
-                  "name": "comment.block.hlsl"
-                },
-                "5": {
-                  "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
-                },
-                "6": {
-                  "name": "punctuation.separator.delimiter.comma.hlsl"
-                },
-                "7": {
-                  "name": "keyword.operator.assignment.hlsl"
-                }
-              }
-            },
-            {
-              "include": "#evaluation_context"
-            }
-          ]
-        },
-        "3": {
-        },
-        "4": {
-          "name": "punctuation.definition.capture.end.lambda.hlsl"
-        },
-        "5": {
-          "patterns": [
-            {
-              "include": "#inline_comment"
-            }
-          ]
-        },
-        "6": {
-          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
-        },
-        "7": {
-          "name": "comment.block.hlsl"
-        },
-        "8": {
-          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
-        }
-      },
-      "endCaptures": {
-      },
-      "patterns": [
-        {
-          "begin": "\\(",
-          "end": "\\)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.parameters.begin.lambda.hlsl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.parameters.end.lambda.hlsl"
-            }
-          },
-          "name": "meta.function.definition.parameters.lambda.hlsl",
-          "patterns": [
-            {
-              "include": "#function_parameter_context"
-            }
-          ]
-        },
-        {
-          "match": "(?<!\\w)(?:constexpr|consteval|mutable)(?!\\w)",
-          "name": "storage.modifier.lambda.$0.hlsl"
-        },
-        {
-          "begin": "->",
-          "end": "(?=\\{)",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.lambda.return-type.hlsl"
-            }
-          },
-          "endCaptures": {
-          },
-          "patterns": [
-            {
-              "include": "#comments"
-            },
-            {
-              "match": "\\S+",
-              "name": "storage.type.return-type.lambda.hlsl"
-            }
-          ]
-        },
-        {
-          "begin": "\\{",
-          "end": "\\}",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.section.block.begin.bracket.curly.lambda.hlsl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.section.block.end.bracket.curly.lambda.hlsl"
-            }
-          },
-          "name": "meta.function.definition.body.lambda.hlsl",
-          "patterns": [
-            {
-              "include": "#function_body_context"
-            }
-          ]
-        }
-      ]
     },
     "language_constants": {
       "match": "(?<!\\w)(?:nullptr|false|NULL|true)(?!\\w)",
@@ -16814,9 +16672,6 @@
         },
         {
           "include": "#storage_types"
-        },
-        {
-          "include": "#lambdas"
         },
         {
           "include": "#attributes_context"
