@@ -206,7 +206,7 @@ grammar = Grammar.new(
             # statements
             :static_assert,                 # it is unclear to me if static_assert can appear in the root context or not, so I'm leaving it here to be safe. https://en.cppreference.com/w/cpp/language/static_assert
             # :assembly,                      # it is unclear to me is assembly can be in the root context or not, so I'm leaving it here to be safe
-            # :function_pointer,
+            :function_pointer,
 
             # eventually this needs to be removed
             :evaluation_context
@@ -266,7 +266,7 @@ grammar = Grammar.new(
             :functional_specifiers_pre_parameters,      # TODO: these probably need to be moved inside the function definition pattern
             :storage_types,
             # misc
-            # :lambdas,
+            :lambdas,
             :attributes_context, # this is here because it needs to be lower than :operators. TODO: once all the contexts are cleaned up, this should be put in a better spot
             :parentheses,
             :function_call,
@@ -1814,53 +1814,51 @@ grammar = Grammar.new(
 #
 # function pointer
 #
-    # HLSL change begin
-    # after_declaration = std_space.maybe(grammar[:qualifiers_and_specifiers_post_parameters_inline].then(std_space)).lookAheadFor(/[{=,);>]|\n/).lookAheadToAvoid(/\(/)
-    # functionPointerGenerator = ->(identifier_tag) do
-    #     return PatternRange.new(
-    #         start_pattern: grammar[:simple_type].then(std_space).then(
-    #                 match: /\(/,
-    #                 tag_as: "punctuation.section.parens.begin.bracket.round.function.pointer"
-    #             ).then(
-    #                 match: /\*/,
-    #                 tag_as: "punctuation.definition.function.pointer.dereference",
-    #             ).maybe(@spaces).maybe(
-    #                 match: identifier,
-    #                 tag_as: identifier_tag
-    #             ).maybe(@spaces).zeroOrMoreOf(
-    #                 # an array of function pointers ?
-    #                 array_brackets
-    #             ).then(
-    #                 # closing ) for the variable name
-    #                 match: /\)/,
-    #                 tag_as: "punctuation.section.parens.end.bracket.round.function.pointer"
-    #             ).maybe(@spaces).then(
-    #                 # opening ( for the parameter types
-    #                 match: /\(/,
-    #                 tag_as: "punctuation.section.parameters.begin.bracket.round.function.pointer"
-    #             ),
-    #         end_pattern: Pattern.new(
-    #                 match: /\)/,
-    #                 tag_as: "punctuation.section.parameters.end.bracket.round.function.pointer"
-    #             ).then(after_declaration),
-    #         includes: [
-    #             :function_parameter_context,
-    #         ]
-    #     )
-    # end
-    # grammar[:function_pointer] = functionPointerGenerator["variable.other.definition.pointer.function"]
-    # grammar[:function_pointer_parameter] = functionPointerGenerator["variable.parameter.pointer.function"]
-    # grammar[:typedef_function_pointer] = PatternRange.new(
-    #     start_pattern: Pattern.new(
-    #         match: variableBounds[/typedef/],
-    #         tag_as: "keyword.other.typedef"
-    #     ).maybe(@spaces).lookAheadFor(Pattern.new(/.*\(\*\s*/).then(identifier).then(/\s*\)/)),
-    #     end_pattern: lookBehindFor(/;/),
-    #     includes: [
-    #         functionPointerGenerator["entity.name.type.alias entity.name.type.pointer.function"]
-    #     ]
-    # )
-    # HLSL change end
+    after_declaration = std_space.maybe(grammar[:qualifiers_and_specifiers_post_parameters_inline].then(std_space)).lookAheadFor(/[{=,);>]|\n/).lookAheadToAvoid(/\(/)
+    functionPointerGenerator = ->(identifier_tag) do
+        return PatternRange.new(
+            start_pattern: grammar[:simple_type].then(std_space).then(
+                    match: /\(/,
+                    tag_as: "punctuation.section.parens.begin.bracket.round.function.pointer"
+                ).then(
+                    match: /\*/,
+                    tag_as: "punctuation.definition.function.pointer.dereference",
+                ).maybe(@spaces).maybe(
+                    match: identifier,
+                    tag_as: identifier_tag
+                ).maybe(@spaces).zeroOrMoreOf(
+                    # an array of function pointers ?
+                    array_brackets
+                ).then(
+                    # closing ) for the variable name
+                    match: /\)/,
+                    tag_as: "punctuation.section.parens.end.bracket.round.function.pointer"
+                ).maybe(@spaces).then(
+                    # opening ( for the parameter types
+                    match: /\(/,
+                    tag_as: "punctuation.section.parameters.begin.bracket.round.function.pointer"
+                ),
+            end_pattern: Pattern.new(
+                    match: /\)/,
+                    tag_as: "punctuation.section.parameters.end.bracket.round.function.pointer"
+                ).then(after_declaration),
+            includes: [
+                :function_parameter_context,
+            ]
+        )
+    end
+    grammar[:function_pointer] = functionPointerGenerator["variable.other.definition.pointer.function"]
+    grammar[:function_pointer_parameter] = functionPointerGenerator["variable.parameter.pointer.function"]
+    grammar[:typedef_function_pointer] = PatternRange.new(
+        start_pattern: Pattern.new(
+            match: variableBounds[/typedef/],
+            tag_as: "keyword.other.typedef"
+        ).maybe(@spaces).lookAheadFor(Pattern.new(/.*\(\*\s*/).then(identifier).then(/\s*\)/)),
+        end_pattern: lookBehindFor(/;/),
+        includes: [
+            functionPointerGenerator["entity.name.type.alias entity.name.type.pointer.function"]
+        ]
+    )
 #
 # Parameters
 #
@@ -1871,7 +1869,7 @@ grammar = Grammar.new(
         end_pattern: parameter_ending,
         includes: [
             :ever_present_context, #macros and comments
-            # :function_pointer_parameter,
+            :function_pointer_parameter,
             # all of these (indented) are here because of #282
                 :memory_operators,
                 :builtin_storage_type_initilizer,
@@ -1977,7 +1975,7 @@ grammar = Grammar.new(
         includes: [
             :ever_present_context, #macros and comments
             :string_context,
-            # :function_pointer_parameter,
+            :function_pointer_parameter,
             :decltype,
             :vararg_ellipses,
             # this next pattern is for finding preceding modifiers like "const" or "short const" and then forcing the word after them to be tagged as a type "const aType" "short const int"
@@ -2208,130 +2206,128 @@ grammar = Grammar.new(
 #
 # Lambdas
 #
-    # HLSL change begin
-    # only_balanced_square_bracke = Pattern.new(
-    #     should_fully_match: [ "[]", "[testing, testing]", "[testing[], testing]" ],
-    #     should_not_fully_match: [ "testing[]" ],
-    #     reference: "square_brackets",
-    #     match: Pattern.new(
-    #         lookBehindToAvoid(/\[/).then(
-    #             /\[/
-    #         ).lookAheadToAvoid(/\[/).oneOrMoreOf(
-    #             dont_back_track?: true,
-    #             match: Pattern.new(
-    #                 zeroOrMoreOf(
-    #                     match: /[^\[\]]/,
-    #                     dont_back_track?: true,
-    #                 ).maybe(
-    #                     recursivelyMatch("square_brackets")
-    #                 )
-    #             ),
-    #         ).then(/\]/)
-    #     )
-    # )
-    # array_of_invalid_function_names = @cpp_tokens.representationsThat(:canAppearBeforeLambdaCapture)
-    # non_variable_name = /#{array_of_invalid_function_names.map { |each| '\W'+each+'|^'+each } .join('|')}/
-    # grammar[:lambdas] = lambdas = PatternRange.new(
-    #     start_pattern: Pattern.new(
-    #             should_fully_match: [
-    #                 "[]",
-    #                 "[=]",
-    #                 "[&]",
-    #                 "[x,y,x]",
-    #                 "[x, y, &z, w = 1 + 1]",
-    #                 "[ a = blah[1324 + blah[39430]], b, c ]"
-    #             ],
-    #             should_partial_match: [ "[]", "[=](", "[&]{", "[x,y,x]", "[x, y, &z, w = 1 + 1] (", "[ a = blah[1324], b, c ] {" ],
-    #             should_not_partial_match: [ "delete[]", "thing[]", "thing []", "thing     []", "thing[0][0] = 0" ],
-    #             match: Pattern.new(
-    #                 Pattern.new(
-    #                     match: lookBehindFor(/[^\s]|^/).lookBehindToAvoid(/[\w\]\)\[\*&">]/).or(lookBehindFor(non_variable_name)).maybe(@spaces).then(
-    #                         match: Pattern.new(/\[/).lookAheadToAvoid(/\[| *+"| *+\d/),
-    #                         tag_as: "punctuation.definition.capture.begin.lambda",
-    #                     )
-    #                 ).then(
-    #                     match: zeroOrMoreOf(
-    #                         match: Pattern.new(/[^\[\]]/).or(only_balanced_square_bracke),
-    #                         dont_back_track?: true,
-    #                     ),
-    #                     tag_as: "meta.lambda.capture",
-    #                     # the zeroOrMoreOf() is for other []'s that are inside of the lambda capture
-    #                     # this pattern is still imperfect: if someone had a string literal with ['s in it, it could fail
-    #                     includes: [
-    #                         :the_this_keyword,
-    #                         Pattern.new(
-    #                             match: identifier,
-    #                             tag_as: "variable.parameter.capture",
-    #                         ).then(std_space).then(
-    #                             lookAheadFor(/\]|\z|$/).or(
-    #                                 grammar[:comma]
-    #                             ).or(
-    #                                 grammar[:assignment_operator]
-    #                             )
-    #                         ),
-    #                         :evaluation_context
-    #                     ],
-    #                 ).then(
-    #                     match: Pattern.new(/\]/).lookAheadToAvoid(std_space.then(/[\[\];=]/)),
-    #                     tag_as: "punctuation.definition.capture.end.lambda",
-    #                 )
-    #             )
-    #         ),
-    #     end_pattern: Pattern.new(
-    #             match: lookBehindFor(/[;}]/),
-    #         ),
-    #     includes: [
-    #         # check for parameters first
-    #         PatternRange.new(
-    #             tag_as: 'meta.function.definition.parameters.lambda',
-    #             start_pattern: Pattern.new(
-    #                     match: /\(/,
-    #                     tag_as:  "punctuation.definition.parameters.begin.lambda",
-    #                 ),
-    #             end_pattern: Pattern.new(
-    #                     match: /\)/,
-    #                     tag_as:  "punctuation.definition.parameters.end.lambda",
-    #                 ),
-    #             includes: [ :function_parameter_context ]
-    #         ),
-    #         # specifiers
-    #         Pattern.new(
-    #             match: variableBounds[ @cpp_tokens.that(:isLambdaSpecifier) ],
-    #             tag_as: "storage.modifier.lambda.$match"
-    #         ),
-    #         # check for the -> syntax
-    #         PatternRange.new(
-    #             start_pattern: Pattern.new(
-    #                     match: /->/,
-    #                     tag_as: "punctuation.definition.lambda.return-type"
-    #                 ),
-    #             end_pattern: Pattern.new(
-    #                     match: lookAheadFor(/\{/),
-    #                 ),
-    #             includes: [
-    #                 :comments,
-    #                 Pattern.new(
-    #                     tag_as: "storage.type.return-type.lambda",
-    #                     match: /\S+/,
-    #                 ),
-    #             ],
-    #         ),
-    #         # then find the body
-    #         PatternRange.new(
-    #             tag_as: "meta.function.definition.body.lambda",
-    #             start_pattern: Pattern.new(
-    #                     match: /\{/,
-    #                     tag_as:  "punctuation.section.block.begin.bracket.curly.lambda",
-    #                 ),
-    #             end_pattern: Pattern.new(
-    #                     match: /\}/,
-    #                     tag_as:  "punctuation.section.block.end.bracket.curly.lambda",
-    #                 ),
-    #             includes: [ :function_body_context ]
-    #         ),
-    #     ]
-    # )
-    # HLSL change end
+    only_balanced_square_bracke = Pattern.new(
+        should_fully_match: [ "[]", "[testing, testing]", "[testing[], testing]" ],
+        should_not_fully_match: [ "testing[]" ],
+        reference: "square_brackets",
+        match: Pattern.new(
+            lookBehindToAvoid(/\[/).then(
+                /\[/
+            ).lookAheadToAvoid(/\[/).oneOrMoreOf(
+                dont_back_track?: true,
+                match: Pattern.new(
+                    zeroOrMoreOf(
+                        match: /[^\[\]]/,
+                        dont_back_track?: true,
+                    ).maybe(
+                        recursivelyMatch("square_brackets")
+                    )
+                ),
+            ).then(/\]/)
+        )
+    )
+    array_of_invalid_function_names = @cpp_tokens.representationsThat(:canAppearBeforeLambdaCapture)
+    non_variable_name = /#{array_of_invalid_function_names.map { |each| '\W'+each+'|^'+each } .join('|')}/
+    grammar[:lambdas] = lambdas = PatternRange.new(
+        start_pattern: Pattern.new(
+                should_fully_match: [
+                    "[]",
+                    "[=]",
+                    "[&]",
+                    "[x,y,x]",
+                    "[x, y, &z, w = 1 + 1]",
+                    "[ a = blah[1324 + blah[39430]], b, c ]"
+                ],
+                should_partial_match: [ "[]", "[=](", "[&]{", "[x,y,x]", "[x, y, &z, w = 1 + 1] (", "[ a = blah[1324], b, c ] {" ],
+                should_not_partial_match: [ "delete[]", "thing[]", "thing []", "thing     []", "thing[0][0] = 0" ],
+                match: Pattern.new(
+                    Pattern.new(
+                        match: lookBehindFor(/[^\s]|^/).lookBehindToAvoid(/[\w\]\)\[\*&">]/).or(lookBehindFor(non_variable_name)).maybe(@spaces).then(
+                            match: Pattern.new(/\[/).lookAheadToAvoid(/\[| *+"| *+\d/),
+                            tag_as: "punctuation.definition.capture.begin.lambda",
+                        )
+                    ).then(
+                        match: zeroOrMoreOf(
+                            match: Pattern.new(/[^\[\]]/).or(only_balanced_square_bracke),
+                            dont_back_track?: true,
+                        ),
+                        tag_as: "meta.lambda.capture",
+                        # the zeroOrMoreOf() is for other []'s that are inside of the lambda capture
+                        # this pattern is still imperfect: if someone had a string literal with ['s in it, it could fail
+                        includes: [
+                            :the_this_keyword,
+                            Pattern.new(
+                                match: identifier,
+                                tag_as: "variable.parameter.capture",
+                            ).then(std_space).then(
+                                lookAheadFor(/\]|\z|$/).or(
+                                    grammar[:comma]
+                                ).or(
+                                    grammar[:assignment_operator]
+                                )
+                            ),
+                            :evaluation_context
+                        ],
+                    ).then(
+                        match: Pattern.new(/\]/).lookAheadToAvoid(std_space.then(/[\[\];=]/)),
+                        tag_as: "punctuation.definition.capture.end.lambda",
+                    )
+                )
+            ),
+        end_pattern: Pattern.new(
+                match: lookBehindFor(/[;}]/),
+            ),
+        includes: [
+            # check for parameters first
+            PatternRange.new(
+                tag_as: 'meta.function.definition.parameters.lambda',
+                start_pattern: Pattern.new(
+                        match: /\(/,
+                        tag_as:  "punctuation.definition.parameters.begin.lambda",
+                    ),
+                end_pattern: Pattern.new(
+                        match: /\)/,
+                        tag_as:  "punctuation.definition.parameters.end.lambda",
+                    ),
+                includes: [ :function_parameter_context ]
+            ),
+            # specifiers
+            Pattern.new(
+                match: variableBounds[ @cpp_tokens.that(:isLambdaSpecifier) ],
+                tag_as: "storage.modifier.lambda.$match"
+            ),
+            # check for the -> syntax
+            PatternRange.new(
+                start_pattern: Pattern.new(
+                        match: /->/,
+                        tag_as: "punctuation.definition.lambda.return-type"
+                    ),
+                end_pattern: Pattern.new(
+                        match: lookAheadFor(/\{/),
+                    ),
+                includes: [
+                    :comments,
+                    Pattern.new(
+                        tag_as: "storage.type.return-type.lambda",
+                        match: /\S+/,
+                    ),
+                ],
+            ),
+            # then find the body
+            PatternRange.new(
+                tag_as: "meta.function.definition.body.lambda",
+                start_pattern: Pattern.new(
+                        match: /\{/,
+                        tag_as:  "punctuation.section.block.begin.bracket.curly.lambda",
+                    ),
+                end_pattern: Pattern.new(
+                        match: /\}/,
+                        tag_as:  "punctuation.section.block.end.bracket.curly.lambda",
+                    ),
+                includes: [ :function_body_context ]
+            ),
+        ]
+    )
 #
 # Classes, structs, unions, enums
 #
@@ -2486,7 +2482,7 @@ grammar = Grammar.new(
                 :inheritance_context,
                 :template_call_range_helper,
             ],
-            body_includes: [ :static_assert, :constructor_inline, :destructor_inline, :operator_overload, :normal_variable_declaration, :normal_variable_assignment, :$initial_context ],
+            body_includes: [ :function_pointer, :static_assert, :constructor_inline, :destructor_inline, :operator_overload, :normal_variable_declaration, :normal_variable_assignment, :$initial_context ],
             tail_includes: tail_includes
         )
     end

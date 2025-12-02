@@ -94,6 +94,9 @@
       "include": "#static_assert"
     },
     {
+      "include": "#function_pointer"
+    },
+    {
       "include": "#evaluation_context"
     }
   ],
@@ -636,6 +639,9 @@
           },
           "name": "meta.body.class.hlsl",
           "patterns": [
+            {
+              "include": "#function_pointer"
+            },
             {
               "include": "#static_assert"
             },
@@ -3573,6 +3579,9 @@
           "include": "#storage_types"
         },
         {
+          "include": "#lambdas"
+        },
+        {
           "include": "#attributes_context"
         },
         {
@@ -3816,6 +3825,9 @@
         },
         {
           "include": "#static_assert"
+        },
+        {
+          "include": "#function_pointer"
         },
         {
           "include": "#over_qualified_types"
@@ -4586,6 +4598,604 @@
         }
       ]
     },
+    "function_pointer": {
+      "begin": "(\\s*+((?:(?:(?:(?:\\[\\[.*?\\]\\]|__attribute(?:__)?\\s*\\(\\s*\\(.*?\\)\\s*\\))|__declspec\\(.*?\\))|alignas\\(.*?\\))|\\[.*?\\])(?!\\)))?((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(?:(?:(?:unsigned|signed|short|long)|(?:struct|class|union|enum))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))*(?:((?:::)?(?:(?!\\b(?:__has_cpp_attribute|reinterpret_cast|globallycoherent|nointerpolation|reordercoherent|atomic_noexcept|noperspective|__has_include|atomic_cancel|atomic_commit|dynamic_cast|thread_local|column_major|synchronized|static_cast|groupshared|triangleadj|const_cast|primitives|co_return|row_major|constexpr|consteval|constexpr|constexpr|consteval|protected|namespace|constinit|co_return|noexcept|noexcept|continue|co_await|co_yield|volatile|register|restrict|centroid|triangle|vertices|explicit|volatile|noexcept|template|operator|decltype|typename|requires|co_await|co_yield|reflexpr|alignof|alignas|default|discard|cbuffer|tbuffer|uniform|precise|lineadj|indices|payload|mutable|virtual|mutable|private|include|warning|_Pragma|defined|typedef|__asm__|concept|sizeof|delete|not_eq|bitand|and_eq|xor_eq|typeid|switch|return|struct|static|extern|linear|center|shared|inline|friend|public|ifndef|define|pragma|export|import|module|compl|bitor|throw|or_eq|while|catch|break|class|union|const|inout|snorm|unorm|point|const|endif|ifdef|undef|error|using|else|goto|case|enum|line|elif|else|line|this|not|new|xor|and|for|try|out|asm|or|do|if|in|if)\\b)(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)\\s*+(((?<!<)<(?!<)(?:(?:\\/\\*(?:[^\\*]++|\\*+(?!\\/))*+\\*\\/)|(?:\"(?:[^\"]*|\\\\\")\")|(?:'(?:[^']*|\\\\')')|\\g<18>|(?:(?:[^'\"<>\\/]|\\/[^*])++))*>)\\s*+)?::)*+)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))?(?!(?:transaction_safe_dynamic|__has_cpp_attribute|reinterpret_cast|globallycoherent|transaction_safe|nointerpolation|reordercoherent|atomic_noexcept|noperspective|__has_include|atomic_cancel|atomic_commit|dynamic_cast|thread_local|column_major|synchronized|static_cast|groupshared|triangleadj|const_cast|primitives|co_return|row_major|constexpr|consteval|constexpr|constexpr|consteval|protected|namespace|constinit|co_return|noexcept|noexcept|continue|co_await|co_yield|volatile|register|restrict|centroid|triangle|vertices|explicit|override|volatile|noexcept|template|operator|decltype|typename|requires|co_await|co_yield|reflexpr|alignof|alignas|default|discard|nullptr|cbuffer|tbuffer|uniform|precise|lineadj|indices|payload|mutable|virtual|mutable|private|include|warning|_Pragma|defined|typedef|__asm__|concept|sizeof|delete|not_eq|bitand|and_eq|xor_eq|typeid|switch|return|static|extern|linear|center|shared|inline|friend|public|ifndef|define|pragma|export|import|module|compl|bitor|throw|or_eq|while|catch|break|false|const|inout|snorm|unorm|point|final|const|endif|ifdef|undef|error|using|audit|axiom|else|goto|case|NULL|true|line|elif|else|line|this|not|new|xor|and|for|try|out|asm|or|do|if|in|if)\\b)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*\\b((?<!<)<(?!<)(?:(?:\\/\\*(?:[^\\*]++|\\*+(?!\\/))*+\\*\\/)|(?:\"(?:[^\"]*|\\\\\")\")|(?:'(?:[^']*|\\\\')')|\\g<18>|(?:(?:[^'\"<>\\/]|\\/[^*])++))*>)?(?![\\w<:.]))(((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))?(?:(?:&|\\*)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))*(?:&|\\*))?((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()(\\*)(?:\\s+)?((?:(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*)?)(?:\\s+)?(?:(\\[)(\\w*)(\\])(?:\\s+)?)*(\\))(?:\\s+)?(\\()",
+      "end": "(\\))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(?:(?:((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))((?<!\\w)(?:override|volatile|noexcept|final|const)(?!\\w)))+(?=\\s*(?:\\{|;|\\n|\\r|=))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))?(?=[{=,);>]|\\n)(?!\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "meta.qualified-type.hlsl",
+          "patterns": [
+            {
+              "match": "::",
+              "name": "punctuation.separator.namespace.access.hlsl punctuation.separator.scope-resolution.hlsl"
+            },
+            {
+              "match": "(?<!\\w)(?:struct|class|union|enum)(?!\\w)",
+              "name": "storage.type.$0.hlsl"
+            },
+            {
+              "include": "#attributes_context"
+            },
+            {
+              "include": "#storage_types"
+            },
+            {
+              "include": "#number_literal"
+            },
+            {
+              "include": "#string_context"
+            },
+            {
+              "include": "#comma"
+            },
+            {
+              "include": "#scope_resolution_inner_generated"
+            },
+            {
+              "include": "#template_call_range_helper"
+            },
+            {
+              "match": "(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*",
+              "name": "entity.name.type.hlsl"
+            }
+          ]
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#attributes_context"
+            },
+            {
+              "include": "#number_literal"
+            }
+          ]
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "4": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "5": {
+          "name": "comment.block.hlsl"
+        },
+        "6": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "7": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "8": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "9": {
+          "name": "comment.block.hlsl"
+        },
+        "10": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "11": {
+          "patterns": [
+            {
+              "match": "::",
+              "name": "punctuation.separator.namespace.access.hlsl punctuation.separator.scope-resolution.type.hlsl"
+            },
+            {
+              "match": "(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)",
+              "name": "entity.name.scope-resolution.type.hlsl"
+            },
+            {
+              "include": "#template_call_range_helper"
+            }
+          ]
+        },
+        "12": {
+          "patterns": [
+            {
+              "include": "#template_call_range_helper"
+            }
+          ]
+        },
+        "13": {
+        },
+        "14": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "15": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "16": {
+          "name": "comment.block.hlsl"
+        },
+        "17": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "18": {
+        },
+        "19": {
+          "patterns": [
+            {
+              "match": "\\*",
+              "name": "storage.modifier.pointer.hlsl"
+            },
+            {
+              "match": "(?:\\&((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))){2,}\\&",
+              "captures": {
+                "1": {
+                  "patterns": [
+                    {
+                      "include": "#inline_comment"
+                    }
+                  ]
+                },
+                "2": {
+                  "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+                },
+                "3": {
+                  "name": "comment.block.hlsl"
+                },
+                "4": {
+                  "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+                }
+              },
+              "name": "invalid.illegal.reference-type.hlsl"
+            },
+            {
+              "match": "\\&",
+              "name": "storage.modifier.reference.hlsl"
+            }
+          ]
+        },
+        "20": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "21": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "22": {
+          "name": "comment.block.hlsl"
+        },
+        "23": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "24": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "25": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "26": {
+          "name": "comment.block.hlsl"
+        },
+        "27": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "28": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "29": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "30": {
+          "name": "comment.block.hlsl"
+        },
+        "31": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "32": {
+          "name": "punctuation.section.parens.begin.bracket.round.function.pointer.hlsl"
+        },
+        "33": {
+          "name": "punctuation.definition.function.pointer.dereference.hlsl"
+        },
+        "34": {
+          "name": "variable.other.definition.pointer.function.hlsl"
+        },
+        "35": {
+          "name": "punctuation.definition.begin.bracket.square.hlsl"
+        },
+        "36": {
+          "patterns": [
+            {
+              "include": "#evaluation_context"
+            }
+          ]
+        },
+        "37": {
+          "name": "punctuation.definition.end.bracket.square.hlsl"
+        },
+        "38": {
+          "name": "punctuation.section.parens.end.bracket.round.function.pointer.hlsl"
+        },
+        "39": {
+          "name": "punctuation.section.parameters.begin.bracket.round.function.pointer.hlsl"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.section.parameters.end.bracket.round.function.pointer.hlsl"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "3": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "4": {
+          "name": "comment.block.hlsl"
+        },
+        "5": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "6": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "7": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "8": {
+          "name": "comment.block.hlsl"
+        },
+        "9": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "10": {
+          "name": "storage.modifier.specifier.functional.post-parameters.$10.hlsl"
+        },
+        "11": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "12": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "13": {
+          "name": "comment.block.hlsl"
+        },
+        "14": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#function_parameter_context"
+        }
+      ]
+    },
+    "function_pointer_parameter": {
+      "begin": "(\\s*+((?:(?:(?:(?:\\[\\[.*?\\]\\]|__attribute(?:__)?\\s*\\(\\s*\\(.*?\\)\\s*\\))|__declspec\\(.*?\\))|alignas\\(.*?\\))|\\[.*?\\])(?!\\)))?((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(?:(?:(?:unsigned|signed|short|long)|(?:struct|class|union|enum))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))*(?:((?:::)?(?:(?!\\b(?:__has_cpp_attribute|reinterpret_cast|globallycoherent|nointerpolation|reordercoherent|atomic_noexcept|noperspective|__has_include|atomic_cancel|atomic_commit|dynamic_cast|thread_local|column_major|synchronized|static_cast|groupshared|triangleadj|const_cast|primitives|co_return|row_major|constexpr|consteval|constexpr|constexpr|consteval|protected|namespace|constinit|co_return|noexcept|noexcept|continue|co_await|co_yield|volatile|register|restrict|centroid|triangle|vertices|explicit|volatile|noexcept|template|operator|decltype|typename|requires|co_await|co_yield|reflexpr|alignof|alignas|default|discard|cbuffer|tbuffer|uniform|precise|lineadj|indices|payload|mutable|virtual|mutable|private|include|warning|_Pragma|defined|typedef|__asm__|concept|sizeof|delete|not_eq|bitand|and_eq|xor_eq|typeid|switch|return|struct|static|extern|linear|center|shared|inline|friend|public|ifndef|define|pragma|export|import|module|compl|bitor|throw|or_eq|while|catch|break|class|union|const|inout|snorm|unorm|point|const|endif|ifdef|undef|error|using|else|goto|case|enum|line|elif|else|line|this|not|new|xor|and|for|try|out|asm|or|do|if|in|if)\\b)(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)\\s*+(((?<!<)<(?!<)(?:(?:\\/\\*(?:[^\\*]++|\\*+(?!\\/))*+\\*\\/)|(?:\"(?:[^\"]*|\\\\\")\")|(?:'(?:[^']*|\\\\')')|\\g<18>|(?:(?:[^'\"<>\\/]|\\/[^*])++))*>)\\s*+)?::)*+)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))?(?!(?:transaction_safe_dynamic|__has_cpp_attribute|reinterpret_cast|globallycoherent|transaction_safe|nointerpolation|reordercoherent|atomic_noexcept|noperspective|__has_include|atomic_cancel|atomic_commit|dynamic_cast|thread_local|column_major|synchronized|static_cast|groupshared|triangleadj|const_cast|primitives|co_return|row_major|constexpr|consteval|constexpr|constexpr|consteval|protected|namespace|constinit|co_return|noexcept|noexcept|continue|co_await|co_yield|volatile|register|restrict|centroid|triangle|vertices|explicit|override|volatile|noexcept|template|operator|decltype|typename|requires|co_await|co_yield|reflexpr|alignof|alignas|default|discard|nullptr|cbuffer|tbuffer|uniform|precise|lineadj|indices|payload|mutable|virtual|mutable|private|include|warning|_Pragma|defined|typedef|__asm__|concept|sizeof|delete|not_eq|bitand|and_eq|xor_eq|typeid|switch|return|static|extern|linear|center|shared|inline|friend|public|ifndef|define|pragma|export|import|module|compl|bitor|throw|or_eq|while|catch|break|false|const|inout|snorm|unorm|point|final|const|endif|ifdef|undef|error|using|audit|axiom|else|goto|case|NULL|true|line|elif|else|line|this|not|new|xor|and|for|try|out|asm|or|do|if|in|if)\\b)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*\\b((?<!<)<(?!<)(?:(?:\\/\\*(?:[^\\*]++|\\*+(?!\\/))*+\\*\\/)|(?:\"(?:[^\"]*|\\\\\")\")|(?:'(?:[^']*|\\\\')')|\\g<18>|(?:(?:[^'\"<>\\/]|\\/[^*])++))*>)?(?![\\w<:.]))(((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))?(?:(?:&|\\*)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))*(?:&|\\*))?((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()(\\*)(?:\\s+)?((?:(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*)?)(?:\\s+)?(?:(\\[)(\\w*)(\\])(?:\\s+)?)*(\\))(?:\\s+)?(\\()",
+      "end": "(\\))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(?:(?:((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))((?<!\\w)(?:override|volatile|noexcept|final|const)(?!\\w)))+(?=\\s*(?:\\{|;|\\n|\\r|=))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))?(?=[{=,);>]|\\n)(?!\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "meta.qualified-type.hlsl",
+          "patterns": [
+            {
+              "match": "::",
+              "name": "punctuation.separator.namespace.access.hlsl punctuation.separator.scope-resolution.hlsl"
+            },
+            {
+              "match": "(?<!\\w)(?:struct|class|union|enum)(?!\\w)",
+              "name": "storage.type.$0.hlsl"
+            },
+            {
+              "include": "#attributes_context"
+            },
+            {
+              "include": "#storage_types"
+            },
+            {
+              "include": "#number_literal"
+            },
+            {
+              "include": "#string_context"
+            },
+            {
+              "include": "#comma"
+            },
+            {
+              "include": "#scope_resolution_inner_generated"
+            },
+            {
+              "include": "#template_call_range_helper"
+            },
+            {
+              "match": "(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*",
+              "name": "entity.name.type.hlsl"
+            }
+          ]
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#attributes_context"
+            },
+            {
+              "include": "#number_literal"
+            }
+          ]
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "4": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "5": {
+          "name": "comment.block.hlsl"
+        },
+        "6": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "7": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "8": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "9": {
+          "name": "comment.block.hlsl"
+        },
+        "10": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "11": {
+          "patterns": [
+            {
+              "match": "::",
+              "name": "punctuation.separator.namespace.access.hlsl punctuation.separator.scope-resolution.type.hlsl"
+            },
+            {
+              "match": "(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)",
+              "name": "entity.name.scope-resolution.type.hlsl"
+            },
+            {
+              "include": "#template_call_range_helper"
+            }
+          ]
+        },
+        "12": {
+          "patterns": [
+            {
+              "include": "#template_call_range_helper"
+            }
+          ]
+        },
+        "13": {
+        },
+        "14": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "15": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "16": {
+          "name": "comment.block.hlsl"
+        },
+        "17": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "18": {
+        },
+        "19": {
+          "patterns": [
+            {
+              "match": "\\*",
+              "name": "storage.modifier.pointer.hlsl"
+            },
+            {
+              "match": "(?:\\&((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))){2,}\\&",
+              "captures": {
+                "1": {
+                  "patterns": [
+                    {
+                      "include": "#inline_comment"
+                    }
+                  ]
+                },
+                "2": {
+                  "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+                },
+                "3": {
+                  "name": "comment.block.hlsl"
+                },
+                "4": {
+                  "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+                }
+              },
+              "name": "invalid.illegal.reference-type.hlsl"
+            },
+            {
+              "match": "\\&",
+              "name": "storage.modifier.reference.hlsl"
+            }
+          ]
+        },
+        "20": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "21": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "22": {
+          "name": "comment.block.hlsl"
+        },
+        "23": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "24": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "25": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "26": {
+          "name": "comment.block.hlsl"
+        },
+        "27": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "28": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "29": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "30": {
+          "name": "comment.block.hlsl"
+        },
+        "31": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "32": {
+          "name": "punctuation.section.parens.begin.bracket.round.function.pointer.hlsl"
+        },
+        "33": {
+          "name": "punctuation.definition.function.pointer.dereference.hlsl"
+        },
+        "34": {
+          "name": "variable.parameter.pointer.function.hlsl"
+        },
+        "35": {
+          "name": "punctuation.definition.begin.bracket.square.hlsl"
+        },
+        "36": {
+          "patterns": [
+            {
+              "include": "#evaluation_context"
+            }
+          ]
+        },
+        "37": {
+          "name": "punctuation.definition.end.bracket.square.hlsl"
+        },
+        "38": {
+          "name": "punctuation.section.parens.end.bracket.round.function.pointer.hlsl"
+        },
+        "39": {
+          "name": "punctuation.section.parameters.begin.bracket.round.function.pointer.hlsl"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.section.parameters.end.bracket.round.function.pointer.hlsl"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "3": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "4": {
+          "name": "comment.block.hlsl"
+        },
+        "5": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "6": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "7": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "8": {
+          "name": "comment.block.hlsl"
+        },
+        "9": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        },
+        "10": {
+          "name": "storage.modifier.specifier.functional.post-parameters.$10.hlsl"
+        },
+        "11": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "12": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "13": {
+          "name": "comment.block.hlsl"
+        },
+        "14": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#function_parameter_context"
+        }
+      ]
+    },
     "functional_specifiers_pre_parameters": {
       "match": "(?<!\\w)(?:constexpr|consteval|explicit|mutable|virtual|inline|friend)(?!\\w)",
       "name": "storage.modifier.specifier.functional.pre-parameters.$0.hlsl"
@@ -5255,6 +5865,145 @@
           "name": "punctuation.separator.label.hlsl"
         }
       }
+    },
+    "lambdas": {
+      "begin": "(?:(?<=[^\\s]|^)(?<![\\w\\]\\)\\[\\*&\">])|(?<=\\Wreturn|^return))(?:\\s+)?(\\[(?!\\[| *+\"| *+\\d))((?:[^\\[\\]]|((?<!\\[)\\[(?!\\[)(?:[^\\[\\]]*+\\g<3>?)++\\]))*+)(\\](?!((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))[\\[\\];=]))",
+      "end": "(?<=[;}])",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.capture.begin.lambda.hlsl"
+        },
+        "2": {
+          "name": "meta.lambda.capture.hlsl",
+          "patterns": [
+            {
+              "include": "#the_this_keyword"
+            },
+            {
+              "match": "((?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(?:(?:(?=\\]|\\z|$)|(,))|(\\=))",
+              "captures": {
+                "1": {
+                  "name": "variable.parameter.capture.hlsl"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#inline_comment"
+                    }
+                  ]
+                },
+                "3": {
+                  "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+                },
+                "4": {
+                  "name": "comment.block.hlsl"
+                },
+                "5": {
+                  "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+                },
+                "6": {
+                  "name": "punctuation.separator.delimiter.comma.hlsl"
+                },
+                "7": {
+                  "name": "keyword.operator.assignment.hlsl"
+                }
+              }
+            },
+            {
+              "include": "#evaluation_context"
+            }
+          ]
+        },
+        "3": {
+        },
+        "4": {
+          "name": "punctuation.definition.capture.end.lambda.hlsl"
+        },
+        "5": {
+          "patterns": [
+            {
+              "include": "#inline_comment"
+            }
+          ]
+        },
+        "6": {
+          "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+        },
+        "7": {
+          "name": "comment.block.hlsl"
+        },
+        "8": {
+          "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+        }
+      },
+      "endCaptures": {
+      },
+      "patterns": [
+        {
+          "begin": "\\(",
+          "end": "\\)",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.parameters.begin.lambda.hlsl"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.parameters.end.lambda.hlsl"
+            }
+          },
+          "name": "meta.function.definition.parameters.lambda.hlsl",
+          "patterns": [
+            {
+              "include": "#function_parameter_context"
+            }
+          ]
+        },
+        {
+          "match": "(?<!\\w)(?:constexpr|consteval|mutable)(?!\\w)",
+          "name": "storage.modifier.lambda.$0.hlsl"
+        },
+        {
+          "begin": "->",
+          "end": "(?=\\{)",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.lambda.return-type.hlsl"
+            }
+          },
+          "endCaptures": {
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "match": "\\S+",
+              "name": "storage.type.return-type.lambda.hlsl"
+            }
+          ]
+        },
+        {
+          "begin": "\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.section.block.begin.bracket.curly.lambda.hlsl"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.bracket.curly.lambda.hlsl"
+            }
+          },
+          "name": "meta.function.definition.body.lambda.hlsl",
+          "patterns": [
+            {
+              "include": "#function_body_context"
+            }
+          ]
+        }
+      ]
     },
     "language_constants": {
       "match": "(?<!\\w)(?:nullptr|false|NULL|true)(?!\\w)",
@@ -8875,6 +9624,9 @@
           "include": "#string_context"
         },
         {
+          "include": "#function_pointer_parameter"
+        },
+        {
           "include": "#decltype"
         },
         {
@@ -9660,6 +10412,9 @@
       "patterns": [
         {
           "include": "#ever_present_context"
+        },
+        {
+          "include": "#function_pointer_parameter"
         },
         {
           "include": "#memory_operators"
@@ -14762,6 +15517,9 @@
           "name": "meta.body.struct.hlsl",
           "patterns": [
             {
+              "include": "#function_pointer"
+            },
+            {
               "include": "#static_assert"
             },
             {
@@ -16058,6 +16816,9 @@
           "include": "#storage_types"
         },
         {
+          "include": "#lambdas"
+        },
+        {
           "include": "#attributes_context"
         },
         {
@@ -16705,6 +17466,9 @@
               "name": "meta.body.class.hlsl",
               "patterns": [
                 {
+                  "include": "#function_pointer"
+                },
+                {
                   "include": "#static_assert"
                 },
                 {
@@ -16830,6 +17594,318 @@
                   "match": ","
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    "typedef_function_pointer": {
+      "begin": "((?<!\\w)typedef(?!\\w))(?:\\s+)?(?=.*\\(\\*\\s*(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*\\s*\\))",
+      "end": "(?<=;)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.typedef.hlsl"
+        }
+      },
+      "endCaptures": {
+      },
+      "patterns": [
+        {
+          "begin": "(\\s*+((?:(?:(?:(?:\\[\\[.*?\\]\\]|__attribute(?:__)?\\s*\\(\\s*\\(.*?\\)\\s*\\))|__declspec\\(.*?\\))|alignas\\(.*?\\))|\\[.*?\\])(?!\\)))?((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(?:(?:(?:unsigned|signed|short|long)|(?:struct|class|union|enum))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))*(?:((?:::)?(?:(?!\\b(?:__has_cpp_attribute|reinterpret_cast|globallycoherent|nointerpolation|reordercoherent|atomic_noexcept|noperspective|__has_include|atomic_cancel|atomic_commit|dynamic_cast|thread_local|column_major|synchronized|static_cast|groupshared|triangleadj|const_cast|primitives|co_return|row_major|constexpr|consteval|constexpr|constexpr|consteval|protected|namespace|constinit|co_return|noexcept|noexcept|continue|co_await|co_yield|volatile|register|restrict|centroid|triangle|vertices|explicit|volatile|noexcept|template|operator|decltype|typename|requires|co_await|co_yield|reflexpr|alignof|alignas|default|discard|cbuffer|tbuffer|uniform|precise|lineadj|indices|payload|mutable|virtual|mutable|private|include|warning|_Pragma|defined|typedef|__asm__|concept|sizeof|delete|not_eq|bitand|and_eq|xor_eq|typeid|switch|return|struct|static|extern|linear|center|shared|inline|friend|public|ifndef|define|pragma|export|import|module|compl|bitor|throw|or_eq|while|catch|break|class|union|const|inout|snorm|unorm|point|const|endif|ifdef|undef|error|using|else|goto|case|enum|line|elif|else|line|this|not|new|xor|and|for|try|out|asm|or|do|if|in|if)\\b)(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)\\s*+(((?<!<)<(?!<)(?:(?:\\/\\*(?:[^\\*]++|\\*+(?!\\/))*+\\*\\/)|(?:\"(?:[^\"]*|\\\\\")\")|(?:'(?:[^']*|\\\\')')|\\g<18>|(?:(?:[^'\"<>\\/]|\\/[^*])++))*>)\\s*+)?::)*+)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))?(?!(?:transaction_safe_dynamic|__has_cpp_attribute|reinterpret_cast|globallycoherent|transaction_safe|nointerpolation|reordercoherent|atomic_noexcept|noperspective|__has_include|atomic_cancel|atomic_commit|dynamic_cast|thread_local|column_major|synchronized|static_cast|groupshared|triangleadj|const_cast|primitives|co_return|row_major|constexpr|consteval|constexpr|constexpr|consteval|protected|namespace|constinit|co_return|noexcept|noexcept|continue|co_await|co_yield|volatile|register|restrict|centroid|triangle|vertices|explicit|override|volatile|noexcept|template|operator|decltype|typename|requires|co_await|co_yield|reflexpr|alignof|alignas|default|discard|nullptr|cbuffer|tbuffer|uniform|precise|lineadj|indices|payload|mutable|virtual|mutable|private|include|warning|_Pragma|defined|typedef|__asm__|concept|sizeof|delete|not_eq|bitand|and_eq|xor_eq|typeid|switch|return|static|extern|linear|center|shared|inline|friend|public|ifndef|define|pragma|export|import|module|compl|bitor|throw|or_eq|while|catch|break|false|const|inout|snorm|unorm|point|final|const|endif|ifdef|undef|error|using|audit|axiom|else|goto|case|NULL|true|line|elif|else|line|this|not|new|xor|and|for|try|out|asm|or|do|if|in|if)\\b)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*\\b((?<!<)<(?!<)(?:(?:\\/\\*(?:[^\\*]++|\\*+(?!\\/))*+\\*\\/)|(?:\"(?:[^\"]*|\\\\\")\")|(?:'(?:[^']*|\\\\')')|\\g<18>|(?:(?:[^'\"<>\\/]|\\/[^*])++))*>)?(?![\\w<:.]))(((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))?(?:(?:&|\\*)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))*(?:&|\\*))?((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()(\\*)(?:\\s+)?((?:(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*)?)(?:\\s+)?(?:(\\[)(\\w*)(\\])(?:\\s+)?)*(\\))(?:\\s+)?(\\()",
+          "end": "(\\))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(?:(?:((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))((?<!\\w)(?:override|volatile|noexcept|final|const)(?!\\w)))+(?=\\s*(?:\\{|;|\\n|\\r|=))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z)))?(?=[{=,);>]|\\n)(?!\\()",
+          "beginCaptures": {
+            "1": {
+              "name": "meta.qualified-type.hlsl",
+              "patterns": [
+                {
+                  "match": "::",
+                  "name": "punctuation.separator.namespace.access.hlsl punctuation.separator.scope-resolution.hlsl"
+                },
+                {
+                  "match": "(?<!\\w)(?:struct|class|union|enum)(?!\\w)",
+                  "name": "storage.type.$0.hlsl"
+                },
+                {
+                  "include": "#attributes_context"
+                },
+                {
+                  "include": "#storage_types"
+                },
+                {
+                  "include": "#number_literal"
+                },
+                {
+                  "include": "#string_context"
+                },
+                {
+                  "include": "#comma"
+                },
+                {
+                  "include": "#scope_resolution_inner_generated"
+                },
+                {
+                  "include": "#template_call_range_helper"
+                },
+                {
+                  "match": "(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*",
+                  "name": "entity.name.type.hlsl"
+                }
+              ]
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#attributes_context"
+                },
+                {
+                  "include": "#number_literal"
+                }
+              ]
+            },
+            "3": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "4": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "5": {
+              "name": "comment.block.hlsl"
+            },
+            "6": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            },
+            "7": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "8": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "9": {
+              "name": "comment.block.hlsl"
+            },
+            "10": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            },
+            "11": {
+              "patterns": [
+                {
+                  "match": "::",
+                  "name": "punctuation.separator.namespace.access.hlsl punctuation.separator.scope-resolution.type.hlsl"
+                },
+                {
+                  "match": "(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)",
+                  "name": "entity.name.scope-resolution.type.hlsl"
+                },
+                {
+                  "include": "#template_call_range_helper"
+                }
+              ]
+            },
+            "12": {
+              "patterns": [
+                {
+                  "include": "#template_call_range_helper"
+                }
+              ]
+            },
+            "13": {
+            },
+            "14": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "15": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "16": {
+              "name": "comment.block.hlsl"
+            },
+            "17": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            },
+            "18": {
+            },
+            "19": {
+              "patterns": [
+                {
+                  "match": "\\*",
+                  "name": "storage.modifier.pointer.hlsl"
+                },
+                {
+                  "match": "(?:\\&((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))){2,}\\&",
+                  "captures": {
+                    "1": {
+                      "patterns": [
+                        {
+                          "include": "#inline_comment"
+                        }
+                      ]
+                    },
+                    "2": {
+                      "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+                    },
+                    "3": {
+                      "name": "comment.block.hlsl"
+                    },
+                    "4": {
+                      "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+                    }
+                  },
+                  "name": "invalid.illegal.reference-type.hlsl"
+                },
+                {
+                  "match": "\\&",
+                  "name": "storage.modifier.reference.hlsl"
+                }
+              ]
+            },
+            "20": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "21": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "22": {
+              "name": "comment.block.hlsl"
+            },
+            "23": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            },
+            "24": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "25": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "26": {
+              "name": "comment.block.hlsl"
+            },
+            "27": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            },
+            "28": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "29": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "30": {
+              "name": "comment.block.hlsl"
+            },
+            "31": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            },
+            "32": {
+              "name": "punctuation.section.parens.begin.bracket.round.function.pointer.hlsl"
+            },
+            "33": {
+              "name": "punctuation.definition.function.pointer.dereference.hlsl"
+            },
+            "34": {
+              "name": "entity.name.type.alias.hlsl entity.name.type.pointer.function.hlsl"
+            },
+            "35": {
+              "name": "punctuation.definition.begin.bracket.square.hlsl"
+            },
+            "36": {
+              "patterns": [
+                {
+                  "include": "#evaluation_context"
+                }
+              ]
+            },
+            "37": {
+              "name": "punctuation.definition.end.bracket.square.hlsl"
+            },
+            "38": {
+              "name": "punctuation.section.parens.end.bracket.round.function.pointer.hlsl"
+            },
+            "39": {
+              "name": "punctuation.section.parameters.begin.bracket.round.function.pointer.hlsl"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.section.parameters.end.bracket.round.function.pointer.hlsl"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "3": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "4": {
+              "name": "comment.block.hlsl"
+            },
+            "5": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            },
+            "6": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "7": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "8": {
+              "name": "comment.block.hlsl"
+            },
+            "9": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            },
+            "10": {
+              "name": "storage.modifier.specifier.functional.post-parameters.$10.hlsl"
+            },
+            "11": {
+              "patterns": [
+                {
+                  "include": "#inline_comment"
+                }
+              ]
+            },
+            "12": {
+              "name": "comment.block.hlsl punctuation.definition.comment.begin.hlsl"
+            },
+            "13": {
+              "name": "comment.block.hlsl"
+            },
+            "14": {
+              "name": "comment.block.hlsl punctuation.definition.comment.end.hlsl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#function_parameter_context"
             }
           ]
         }
@@ -17058,6 +18134,9 @@
               },
               "name": "meta.body.struct.hlsl",
               "patterns": [
+                {
+                  "include": "#function_pointer"
+                },
                 {
                   "include": "#static_assert"
                 },
@@ -17412,6 +18491,9 @@
               },
               "name": "meta.body.union.hlsl",
               "patterns": [
+                {
+                  "include": "#function_pointer"
+                },
                 {
                   "include": "#static_assert"
                 },
@@ -18066,6 +19148,9 @@
           },
           "name": "meta.body.union.hlsl",
           "patterns": [
+            {
+              "include": "#function_pointer"
+            },
             {
               "include": "#static_assert"
             },
